@@ -10,7 +10,7 @@ import numpy as np
 import cv2
 
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 
 while(True):
   # Capture frame-by-frame
@@ -31,6 +31,12 @@ while(True):
 
    contours =  cv2.findContours(mask,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)[-2]
    
+   M = cv2.moments(mask)
+   cX = int(M["m10"] / M["m00"])
+   cY = int(M["m01"] / M["m00"])
+   cv2.circle(frame, (cX, cY), 5, (255, 255, 255), -1)
+   cv2.putText(frame, "centroid", (cX - 25, cY - 25),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+   print(contours)
    for c in contours:
        
        cv2.drawContours(frame, [c], -1, (0,255,0), 3)
