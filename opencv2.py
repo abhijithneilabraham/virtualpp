@@ -10,9 +10,6 @@ import numpy as np
 import cv2 as cv
 import sys
 
-if len(sys.argv) != 2:
-    print('Input video name is missing')
-    exit()
 
 cv.namedWindow("tracking")
 camera = cv.VideoCapture(0)
