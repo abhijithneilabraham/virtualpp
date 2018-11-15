@@ -7,7 +7,6 @@ Created on Wed Nov 14 23:48:32 2018
 """
 
 import pyautogui
-a=pyautogui.press('left')
-d=pyautogui.press('right')
+
 w=pyautogui.press('up')
 s=pyautogui.press('down')
