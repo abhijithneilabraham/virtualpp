@@ -20,8 +20,17 @@ while(True):
    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
    blur = cv2.GaussianBlur(gray,(5,5),0)
    ret, thresh_img = cv2.threshold(blur,91,255,cv2.THRESH_BINARY)
+   hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-   contours =  cv2.findContours(thresh_img,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)[-2]
+    # define range of blue color in HSV(hue saturation value)
+   lower_blue = np.array([110,50,50])
+   upper_blue = np.array([130,255,255])
+
+    # Threshold the HSV image to get only blue colors
+   mask = cv2.inRange(hsv, lower_blue, upper_blue)
+
+   contours =  cv2.findContours(mask,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)[-2]
+   
    for c in contours:
        
        cv2.drawContours(frame, [c], -1, (0,255,0), 3)
