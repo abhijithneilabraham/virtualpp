@@ -50,13 +50,13 @@ while(True):
    if cY>=p:
        
        for j in range(int((cY-p)/10)):
-            pyautogui.press('w')     
+            pyautogui.press('up')     
             
        p=cY
    else:
              
        for j in range(int((p-cY)/10)):               
-           pyautogui.press('s')     
+           pyautogui.press('down')     
            
        p=cY
         
