@@ -7,6 +7,5 @@ Created on Wed Nov 14 23:48:32 2018
 """
 
 import pyautogui
-pyautogui.moveTo(100, 200,.01)
-pyautogui.moveTo(None, 500)  # moves mouse to X of 100, Y of 500.
-pyautogui.moveTo(600, None)
+import contours
+pyautogui.moveTo(100, cY,.01)
