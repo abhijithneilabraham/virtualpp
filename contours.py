@@ -8,7 +8,7 @@ Created on Fri Nov 16 00:05:03 2018
 
 import numpy as np
 import cv2
-
+import pyautogui
 
 cap = cv2.VideoCapture(1)
 
@@ -36,7 +36,7 @@ while(True):
    cY = int(M["m01"] / M["m00"])
    cv2.circle(frame, (cX, cY), 5, (255, 255, 255), -1)
    cv2.putText(frame, "centroid", (cX - 25, cY - 25),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-   print(contours)
+   pyautogui.moveTo(100, cY,.01)
    for c in contours:
        
        cv2.drawContours(frame, [c], -1, (0,255,0), 3)
