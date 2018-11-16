@@ -8,14 +8,18 @@ Created on Fri Nov 16 00:05:03 2018
 
 import numpy as np
 import cv2
-
+import pyautogui
 
 cap = cv2.VideoCapture(1)
+p=100
+i=0
+
+    
 
 while(True):
   # Capture frame-by-frame
    ret, frame = cap.read()
-
+   
    # Our operations on the frame come here
    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
    blur = cv2.GaussianBlur(gray,(5,5),0)
@@ -36,11 +40,26 @@ while(True):
    cY = int(M["m01"] / M["m00"])
    cv2.circle(frame, (cX, cY), 5, (255, 255, 255), -1)
    cv2.putText(frame, "centroid", (cX - 25, cY - 25),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
-   print(contours)
+   pyautogui.moveTo(100, cY,.01)
    for c in contours:
        
        cv2.drawContours(frame, [c], -1, (0,255,0), 3)
-    
+       
+   p=200
+   i=0
+   if cY>=p:
+       
+       for j in range(int((cY-p)/10)):
+            pyautogui.press('w')     
+            
+       p=cY
+   else:
+             
+       for j in range(int((p-cY)/10)):               
+           pyautogui.press('s')     
+           
+       p=cY
+        
      # Display the resulting frame
    cv2.imshow('frame',frame)
    if cv2.waitKey(1) & 0xFF == ord('q'):
