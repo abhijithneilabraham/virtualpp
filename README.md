@@ -6,8 +6,7 @@ Playing a pingpong game with just hand movements(using a glove)using opencv and 
 </p>
 **********
 
-**OpenAI Gym is a toolkit for developing and comparing reinforcement learning algorithms.**
+**opencv is a computer vision library used for image processing applications          **
 
-opencv is a computer vision library used for image processing applications
 Here we used opencv to detect a specific colour(of the glove),and draw a contour over it and use the glove movements to move the centroid obtained from the opearations.This will in turn move the paddle for the game.
 The Game is written such a way that there is only a single player and you gotta survive for as much time as possible.
