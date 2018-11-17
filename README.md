@@ -6,7 +6,7 @@ Playing a pingpong game with just hand movements(using a glove)using opencv and 
 </p>
 **********
 
-**opencv is a computer vision library  **
+**opencv is a computer vision library**
 
 
 Here we used opencv to detect a specific colour(of the glove),and draw a contour over it and use the glove movements to move the centroid obtained from the opearations.This will in turn move the paddle for the game.
