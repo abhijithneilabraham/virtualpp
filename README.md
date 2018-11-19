@@ -27,3 +27,7 @@ Contributors:
 1)Augustin Jose
 
 2)Abhijith Neil Abraham
+
+
+
+Check out the file final.py and you will see comments well documented to understand the code.
