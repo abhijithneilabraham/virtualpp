@@ -3,7 +3,7 @@
 """
 Created on Fri Nov 16 00:05:03 2018
 
-@author: abhijithneilabraham
+
 """
 
 import numpy as np
@@ -113,16 +113,16 @@ def draw(canvas):
     #ball collison check on gutters or paddles
     if int(ball_pos[0]) <= BALL_RADIUS + PAD_WIDTH and int(ball_pos[1])>=paddle1_pos[1]-HALF_PAD_HEIGHT and int(ball_pos[1])<=paddle1_pos[1]+HALF_PAD_HEIGHT:
         ball_vel[0] = -ball_vel[0]
-        ball_vel[0] *= 1.1
-        ball_vel[1] *= 1.1
+        ball_vel[0] *= 1.3
+        ball_vel[1] *= 1.3
     elif int(ball_pos[0]) <= BALL_RADIUS + PAD_WIDTH:
         r_score += 1
         ball_init(True)
         
     if int(ball_pos[0]) >= WIDTH + 1 - BALL_RADIUS - PAD_WIDTH and int(ball_pos[1]) in range(0,592 + 500,1):
         ball_vel[0] = -ball_vel[0]
-        ball_vel[0] *= 1.1
-        ball_vel[1] *= 1.1
+        ball_vel[0] *= 1.3
+        ball_vel[1] *= 1.3
         '''
     elif int(ball_pos[0]) >= WIDTH + 1 - BALL_RADIUS - PAD_WIDTH:
         l_score += 1
@@ -176,15 +176,16 @@ while True:
     
 
     
-    ret, frame = cap.read()
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    blur = cv2.GaussianBlur(gray,(5,5),0)
-    ret, thresh_img = cv2.threshold(blur,91,255,cv2.THRESH_BINARY)
+    ret, frame = cap.read()  
+    
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-    lower_blue = np.array([110,50,50])
-    upper_blue = np.array([130,255,255])
-    mask = cv2.inRange(hsv, lower_blue, upper_blue)
-    contours =  cv2.findContours(mask,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)[-2]
+    blur = cv2.GaussianBlur(hsv,(5,5),5)
+    
+    lower_orange = np.array([0,150,150])
+    upper_orange = np.array([30,255,255])
+    mask = cv2.inRange(blur, lower_orange, upper_orange)
+    ret, thresh_img = cv2.threshold(mask,91,255,cv2.THRESH_BINARY)
+    contours =  cv2.findContours(thresh_img,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)[-2]
     M = cv2.moments(mask)
     if M["m00"]!=0 :
         cX = int(M["m10"] / M["m00"])
@@ -194,6 +195,7 @@ while True:
     cv2.putText(frame, "centroid", (cX - 25, cY - 25),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
     for c in contours:
         cv2.drawContours(frame, [c], -1, (0,255,0), 3)
+   
     p=200
     i=0
     if cY>=p:
@@ -219,10 +221,9 @@ while True:
             pygame.quit()
             sys.exit()
             '''
-
-
-            
+        
     pygame.display.update()
-    fps.tick(60)
+    fps.tick(100)
+    
 cap.release()
 cv2.destroyAllWindows()
