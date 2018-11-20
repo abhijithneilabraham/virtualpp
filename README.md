@@ -1,4 +1,4 @@
-# SINGLE PINGPONG-hand
+# SINGLE PINGPONG-hand (Check out final.py)
 Playing a pingpong game with just hand movements(using a glove)using opencv and python scripts
 <p align="center">
   <img src="https://i.chzbgr.com/full/6686158592/h4715F533/"
@@ -31,5 +31,6 @@ https://github.com/AugustinJose1221
 
 
 
-Check out the file final.py and you will see comments well documented to understand the code.
+Check out the file "final.py"
+and you will see comments well documented to understand the code.
 P.S. please remember to show an orange object in front of the camera before launching the code.Else,you will see an error. 
