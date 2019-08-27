@@ -1,8 +1,8 @@
 Metadata-Version: 2.1
 Name: virtualpp
-Version: 0.1
-Summary: A virtual pingpong game
-Home-page: https://github.com/javatechy/dokr
+Version: 0.0.1
+Summary: An opencv based virtual pingpong
+Home-page: https://github.com/abhijithneilabraham/PINGPONG-hand
 Author: Abhijith Neil Abraham
 Author-email: abhijithneilabrahampk@gmail.com
 License: UNKNOWN
