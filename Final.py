@@ -9,10 +9,10 @@ Created on Fri Nov 16 00:05:03 2018
 import numpy as np
 import cv2
 import random
-import pygame, sys
+import pygame
 from pygame.locals import *
 
-cap = cv2.VideoCapture(1) #This enables the camera.The value 1 is for external camera,0 for internal camera
+cap = cv2.VideoCapture(0) #This enables the camera.The value 1 is for external camera,0 for internal camera
 p=100
 i=0
 pygame.init()
