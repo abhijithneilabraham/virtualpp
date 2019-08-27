@@ -13,7 +13,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="virtualpp-abhijithneilabraham",
+    name="virtualpp",
     version="0.0.1",
     author="Abhijith Neil Abraham",
     author_email="abhijithneilabrahampk@gmail.com",
