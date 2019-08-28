@@ -1,10 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Nov 16 00:05:03 2018
-
-
-"""
 
 import numpy as np
 import cv2
@@ -41,7 +34,7 @@ r_score = 0
 
 #canvas declaration
 window = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
-pygame.display.set_caption('Hello World')
+pygame.display.set_caption('Ping Pong')
 
 # helper function that spawns a ball, returns a position vector and a velocity vector
 # if right is True, spawn to the right, else spawn to the left
@@ -123,11 +116,6 @@ def draw(canvas):
         ball_vel[0] = -ball_vel[0]
         ball_vel[0] *= 1.3
         ball_vel[1] *= 1.3
-        '''
-    elif int(ball_pos[0]) >= WIDTH + 1 - BALL_RADIUS - PAD_WIDTH:
-        l_score += 1
-        ball_init(False)
-        '''
 
     #update scores
     myfont1 = pygame.font.SysFont("Comic Sans MS", 20)
@@ -233,25 +221,19 @@ while True:
             keydown(1)
             
         p=cY
+        '''
+        Simulating down arrow pressing when the centroid moves down
+        '''
     else:
         for j in range(int((p-cY)/10)):
             keyup(1)     
         p=cY
+        '''
+        Simulating up arrow pressing when the centroid moves up
+        '''
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
     draw(window)
-    '''
-    for event in pygame.event.get():
-
-        if event.type == KEYDOWN:
-            keydown(event)
-        elif event.type == KEYUP:
-            keyup(event)
-        elif event.type == QUIT:
-            pygame.quit()
-            sys.exit()
-            '''
-        
     pygame.display.update()
     fps.tick(100)
     
