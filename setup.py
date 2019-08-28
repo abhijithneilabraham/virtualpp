@@ -14,7 +14,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="virtualpp",
-    version="0.0.2",
+    version="0.0.5",
     author="Abhijith Neil Abraham",
     author_email="abhijithneilabrahampk@gmail.com",
     description="An opencv based virtual pingpong",
@@ -28,3 +28,4 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
 )
+sdfs
