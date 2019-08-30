@@ -1,16 +1,10 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Nov 16 00:05:03 2018
-
-
-"""
-
 import numpy as np
 import cv2
 import random
 import pygame
 from pygame.locals import *
+
+cap = cv2.VideoCapture(0) #This enables the camera.The value 1 is for external camera,0 for internal camera
 p=100
 i=0
 pygame.init()
@@ -36,12 +30,10 @@ paddle1_vel = 0
 paddle2_vel = 0
 l_score = 0
 r_score = 0
-def initialize():
-    global cap,window
-    cap = cv2.VideoCapture(0) #This enables the camera.The value 1 is for external camera,0 for internal camera    
-    #canvas declaration
-    window = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
-    pygame.display.set_caption('Ping Pong')
+
+#canvas declaration
+window = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
+pygame.display.set_caption('Ping Pong')
 
 # helper function that spawns a ball, returns a position vector and a velocity vector
 # if right is True, spawn to the right, else spawn to the left
@@ -179,9 +171,9 @@ def game(ColorLow,ColorHigh):
         '''
         The blurring is set to high here. we did blurring because,blurring eliminates the image noise and  reduce detail.
         '''
-        lower_range = np.array(ColorLow)#see,the hue from 0,30 is used here for orange,but remeber to set the other values too according to your need.If the other two values are zero,then you will get black because of zero intensity
-        upper_range = np.array(ColorHigh)
-        mask = cv2.inRange(blur, lower_range, upper_range)
+        lower_orange = np.array(ColorLow)#see,the hue from 0,30 is used here for orange,but remeber to set the other values too according to your need.If the other two values are zero,then you will get black because of zero intensity
+        upper_orange = np.array(ColorHigh)
+        mask = cv2.inRange(blur, lower_orange, upper_orange)
         '''
         the color from lower orange to upper orange is noted here.
         '''
@@ -208,7 +200,7 @@ def game(ColorLow,ColorHigh):
         cv2.putText(frame, "centroid", (cX - 25, cY - 25),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
         for c in contours:
             cv2.drawContours(frame, [c], -1, (0,255,0), 3)#in previous function of contours i just only found contours. Now here I am drawing
-       
+        cv2.imshow("frame",frame)
         p=200
         i=0
         if cY>=p:
@@ -234,3 +226,8 @@ def game(ColorLow,ColorHigh):
         
     cap.release()#release the camera beast
     cv2.destroyAllWindows()
+def GameColor(color):
+    if color=="GREEN":
+        game([51,74,160],[90,147,255])
+    if color=="ORANGE":
+        game([0,150,150],[30,255,255])
