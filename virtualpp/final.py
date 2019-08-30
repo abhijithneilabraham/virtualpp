@@ -18,7 +18,7 @@ BLACK = (0,0,0)
 
 #globals
 WIDTH = 600
-HEIGHT = 400       
+HEIGHT = 400
 BALL_RADIUS = 20
 PAD_WIDTH = 8
 PAD_HEIGHT = 80
@@ -42,10 +42,10 @@ def ball_init(right):
     ball_pos = [WIDTH//2,HEIGHT//2]
     horz = random.randrange(2,4)
     vert = random.randrange(1,3)
-    
+
     if right == False:
         horz = - horz
-        
+
     ball_vel = [horz,-vert]
 
 # define event handlers
@@ -65,7 +65,7 @@ def init():
 #draw function of canvas
 def draw(canvas):
     global paddle1_pos, paddle2_pos, ball_pos, ball_vel, l_score, r_score
-           
+
     canvas.fill(BLACK)
     pygame.draw.line(canvas, WHITE, [WIDTH // 2, 0],[WIDTH // 2, HEIGHT], 1)
     pygame.draw.line(canvas, WHITE, [PAD_WIDTH, 0],[PAD_WIDTH, HEIGHT], 1)
@@ -79,7 +79,7 @@ def draw(canvas):
         paddle1_pos[1] += paddle1_vel
     elif paddle1_pos[1] == HEIGHT - HALF_PAD_HEIGHT and paddle1_vel < 0:
         paddle1_pos[1] += paddle1_vel
-    
+
     if paddle2_pos[1] > HALF_PAD_HEIGHT and paddle2_pos[1] < HEIGHT - HALF_PAD_HEIGHT:
         paddle2_pos[1] += paddle2_vel
     elif paddle2_pos[1] == HALF_PAD_HEIGHT and paddle2_vel > 0:
@@ -101,7 +101,7 @@ def draw(canvas):
         ball_vel[1] = - ball_vel[1]
     if int(ball_pos[1]) >= HEIGHT + 1 - BALL_RADIUS:
         ball_vel[1] = -ball_vel[1]
-    
+
     #ball collison check on gutters or paddles
     if int(ball_pos[0]) <= BALL_RADIUS + PAD_WIDTH and int(ball_pos[1])>=paddle1_pos[1]-HALF_PAD_HEIGHT and int(ball_pos[1])<=paddle1_pos[1]+HALF_PAD_HEIGHT:
         ball_vel[0] = -ball_vel[0]
@@ -110,7 +110,7 @@ def draw(canvas):
     elif int(ball_pos[0]) <= BALL_RADIUS + PAD_WIDTH:
         r_score += 1
         ball_init(True)
-        
+
     if int(ball_pos[0]) >= WIDTH + 1 - BALL_RADIUS - PAD_WIDTH and int(ball_pos[1]) in range(0,592 + 500,1):
         ball_vel[0] = -ball_vel[0]
         ball_vel[0] *= 1.3
@@ -123,9 +123,9 @@ def draw(canvas):
 
     myfont2 = pygame.font.SysFont("Comic Sans MS", 20)
     label2 = myfont2.render("Score "+str(r_score), 1, (255,255,0))
-    canvas.blit(label2, (470, 20))  
-    
-    
+    canvas.blit(label2, (470, 20))
+
+
 #keydown handler
 def keydown(event):
     global paddle1_vel, paddle2_vel
@@ -160,9 +160,9 @@ def game(ColorLow,ColorHigh):
     #game loop
     cX=25
     cY=25
-    while True:    
-        ret, frame = cap.read()  #returns ret=either true or false. the frame variable has the frames 
-        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV) 
+    while True:
+        ret, frame = cap.read()  #returns ret=either true or false. the frame variable has the frames
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         '''
         why did we convert to hsv ? because while using BGR,we have to use 3 values for color combinations(eg.(255,90,30))
         But in case of hsv,for getting the required color,we have to change only one parameter,that is ,hue ,and the two other parameters can be changed just to change the saturation and values.
@@ -179,12 +179,12 @@ def game(ColorLow,ColorHigh):
         '''
         ret, thresh_img = cv2.threshold(mask,91,255,cv2.THRESH_BINARY)
         '''
-        Here, the matter is straight forward. 
-        If pixel value is greater than a threshold value, it is assigned one value (may be white), else it is assigned another value (may be black). 
-        The function used is cv.threshold. First argument is the source image, which should be a grayscale image. 
-        Second argument is the threshold value which is used to classify the pixel values. 
-        Third argument is the maxVal which represents the value to be given if pixel value is more than (sometimes less than) the threshold value. 
-        OpenCV provides different styles of thresholding and it is decided by the fourth parameter of the function. 
+        Here, the matter is straight forward.
+        If pixel value is greater than a threshold value, it is assigned one value (may be white), else it is assigned another value (may be black).
+        The function used is cv.threshold. First argument is the source image, which should be a grayscale image.
+        Second argument is the threshold value which is used to classify the pixel values.
+        Third argument is the maxVal which represents the value to be given if pixel value is more than (sometimes less than) the threshold value.
+        OpenCV provides different styles of thresholding and it is decided by the fourth parameter of the function.
         '''
         contours =  cv2.findContours(thresh_img,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)[-2]#ah,the cool fun part!draw contours over the required orange area!
         '''
@@ -206,14 +206,14 @@ def game(ColorLow,ColorHigh):
         if cY>=p:
             for j in range(int((cY-p)/10)):
                 keydown(1)
-                
+
             p=cY
             '''
             Simulating down arrow pressing when the centroid moves down
             '''
         else:
             for j in range(int((p-cY)/10)):
-                keyup(1)     
+                keyup(1)
             p=cY
             '''
             Simulating up arrow pressing when the centroid moves up
@@ -223,7 +223,7 @@ def game(ColorLow,ColorHigh):
         draw(window)
         pygame.display.update()
         fps.tick(100)
-        
+
     cap.release()#release the camera beast
     cv2.destroyAllWindows()
 def GameColor(color):

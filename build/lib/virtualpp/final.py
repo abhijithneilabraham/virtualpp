@@ -1,16 +1,10 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Nov 16 00:05:03 2018
-
-
-"""
-
 import numpy as np
 import cv2
 import random
 import pygame
 from pygame.locals import *
+
+cap = cv2.VideoCapture(0) #This enables the camera.The value 1 is for external camera,0 for internal camera
 p=100
 i=0
 pygame.init()
@@ -24,7 +18,7 @@ BLACK = (0,0,0)
 
 #globals
 WIDTH = 600
-HEIGHT = 400       
+HEIGHT = 400
 BALL_RADIUS = 20
 PAD_WIDTH = 8
 PAD_HEIGHT = 80
@@ -36,12 +30,10 @@ paddle1_vel = 0
 paddle2_vel = 0
 l_score = 0
 r_score = 0
-def initialize():
-    global cap,window
-    cap = cv2.VideoCapture(0) #This enables the camera.The value 1 is for external camera,0 for internal camera    
-    #canvas declaration
-    window = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
-    pygame.display.set_caption('Ping Pong')
+
+#canvas declaration
+window = pygame.display.set_mode((WIDTH, HEIGHT), 0, 32)
+pygame.display.set_caption('Ping Pong')
 
 # helper function that spawns a ball, returns a position vector and a velocity vector
 # if right is True, spawn to the right, else spawn to the left
@@ -50,10 +42,10 @@ def ball_init(right):
     ball_pos = [WIDTH//2,HEIGHT//2]
     horz = random.randrange(2,4)
     vert = random.randrange(1,3)
-    
+
     if right == False:
         horz = - horz
-        
+
     ball_vel = [horz,-vert]
 
 # define event handlers
@@ -73,7 +65,7 @@ def init():
 #draw function of canvas
 def draw(canvas):
     global paddle1_pos, paddle2_pos, ball_pos, ball_vel, l_score, r_score
-           
+
     canvas.fill(BLACK)
     pygame.draw.line(canvas, WHITE, [WIDTH // 2, 0],[WIDTH // 2, HEIGHT], 1)
     pygame.draw.line(canvas, WHITE, [PAD_WIDTH, 0],[PAD_WIDTH, HEIGHT], 1)
@@ -87,7 +79,7 @@ def draw(canvas):
         paddle1_pos[1] += paddle1_vel
     elif paddle1_pos[1] == HEIGHT - HALF_PAD_HEIGHT and paddle1_vel < 0:
         paddle1_pos[1] += paddle1_vel
-    
+
     if paddle2_pos[1] > HALF_PAD_HEIGHT and paddle2_pos[1] < HEIGHT - HALF_PAD_HEIGHT:
         paddle2_pos[1] += paddle2_vel
     elif paddle2_pos[1] == HALF_PAD_HEIGHT and paddle2_vel > 0:
@@ -109,7 +101,7 @@ def draw(canvas):
         ball_vel[1] = - ball_vel[1]
     if int(ball_pos[1]) >= HEIGHT + 1 - BALL_RADIUS:
         ball_vel[1] = -ball_vel[1]
-    
+
     #ball collison check on gutters or paddles
     if int(ball_pos[0]) <= BALL_RADIUS + PAD_WIDTH and int(ball_pos[1])>=paddle1_pos[1]-HALF_PAD_HEIGHT and int(ball_pos[1])<=paddle1_pos[1]+HALF_PAD_HEIGHT:
         ball_vel[0] = -ball_vel[0]
@@ -118,7 +110,7 @@ def draw(canvas):
     elif int(ball_pos[0]) <= BALL_RADIUS + PAD_WIDTH:
         r_score += 1
         ball_init(True)
-        
+
     if int(ball_pos[0]) >= WIDTH + 1 - BALL_RADIUS - PAD_WIDTH and int(ball_pos[1]) in range(0,592 + 500,1):
         ball_vel[0] = -ball_vel[0]
         ball_vel[0] *= 1.3
@@ -131,9 +123,9 @@ def draw(canvas):
 
     myfont2 = pygame.font.SysFont("Comic Sans MS", 20)
     label2 = myfont2.render("Score "+str(r_score), 1, (255,255,0))
-    canvas.blit(label2, (470, 20))  
-    
-    
+    canvas.blit(label2, (470, 20))
+
+
 #keydown handler
 def keydown(event):
     global paddle1_vel, paddle2_vel
@@ -168,9 +160,9 @@ def game(ColorLow,ColorHigh):
     #game loop
     cX=25
     cY=25
-    while True:    
-        ret, frame = cap.read()  #returns ret=either true or false. the frame variable has the frames 
-        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV) 
+    while True:
+        ret, frame = cap.read()  #returns ret=either true or false. the frame variable has the frames
+        hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         '''
         why did we convert to hsv ? because while using BGR,we have to use 3 values for color combinations(eg.(255,90,30))
         But in case of hsv,for getting the required color,we have to change only one parameter,that is ,hue ,and the two other parameters can be changed just to change the saturation and values.
@@ -187,12 +179,12 @@ def game(ColorLow,ColorHigh):
         '''
         ret, thresh_img = cv2.threshold(mask,91,255,cv2.THRESH_BINARY)
         '''
-        Here, the matter is straight forward. 
-        If pixel value is greater than a threshold value, it is assigned one value (may be white), else it is assigned another value (may be black). 
-        The function used is cv.threshold. First argument is the source image, which should be a grayscale image. 
-        Second argument is the threshold value which is used to classify the pixel values. 
-        Third argument is the maxVal which represents the value to be given if pixel value is more than (sometimes less than) the threshold value. 
-        OpenCV provides different styles of thresholding and it is decided by the fourth parameter of the function. 
+        Here, the matter is straight forward.
+        If pixel value is greater than a threshold value, it is assigned one value (may be white), else it is assigned another value (may be black).
+        The function used is cv.threshold. First argument is the source image, which should be a grayscale image.
+        Second argument is the threshold value which is used to classify the pixel values.
+        Third argument is the maxVal which represents the value to be given if pixel value is more than (sometimes less than) the threshold value.
+        OpenCV provides different styles of thresholding and it is decided by the fourth parameter of the function.
         '''
         contours =  cv2.findContours(thresh_img,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)[-2]#ah,the cool fun part!draw contours over the required orange area!
         '''
@@ -208,20 +200,20 @@ def game(ColorLow,ColorHigh):
         cv2.putText(frame, "centroid", (cX - 25, cY - 25),cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
         for c in contours:
             cv2.drawContours(frame, [c], -1, (0,255,0), 3)#in previous function of contours i just only found contours. Now here I am drawing
-       
+        cv2.imshow("frame",frame)
         p=200
         i=0
         if cY>=p:
             for j in range(int((cY-p)/10)):
                 keydown(1)
-                
+
             p=cY
             '''
             Simulating down arrow pressing when the centroid moves down
             '''
         else:
             for j in range(int((p-cY)/10)):
-                keyup(1)     
+                keyup(1)
             p=cY
             '''
             Simulating up arrow pressing when the centroid moves up
@@ -231,6 +223,11 @@ def game(ColorLow,ColorHigh):
         draw(window)
         pygame.display.update()
         fps.tick(100)
-        
+
     cap.release()#release the camera beast
     cv2.destroyAllWindows()
+def GameColor(color):
+    if color=="GREEN":
+        game([51,74,160],[90,147,255])
+    if color=="ORANGE":
+        game([0,150,150],[30,255,255])
