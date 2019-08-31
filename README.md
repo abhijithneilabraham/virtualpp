@@ -2,7 +2,7 @@
 Playing a pingpong game with just color detection  using opencv and python scripts
 <p align="center">
   <img src="PingPong.png"
-       height="500" width="500"alt="PONG"/>
+       height="500" width="600"alt="PONG"/>
 </p>
 
 
