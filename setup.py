@@ -14,7 +14,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="virtualpp",
-    version="0.0.6",
+    version="0.0.7",
     author="Abhijith Neil Abraham",
     author_email="abhijithneilabrahampk@gmail.com",
     description="An opencv based virtual pingpong",
