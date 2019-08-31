@@ -6,8 +6,6 @@ Playing a pingpong game with just color detection  using opencv and python scrip
 </p>
 
 
-**opencv is a computer vision library**
-
 
 Here we used opencv to detect a specific colour(of the glove),and draw a contour over it and use the glove movements to move the centroid obtained from the operations.This will in turn move the paddle for the game.
 
@@ -29,12 +27,6 @@ final.GameColor("Green")
 
 (optional)You can integrate this into a projector inside a dark room and it will give good results.
 
-Contributors:
-
-1)Augustin Jose
-https://github.com/AugustinJose1221
-
-2)Abhijith Neil Abraham
 
 
 
